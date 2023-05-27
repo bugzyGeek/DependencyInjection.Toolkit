@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
 namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator
@@ -10,15 +8,22 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
         internal static List<Diagnostic> Diagnostics { get; } = new List<Diagnostic>();
 
 
-        internal static void Add(string id, string title, string messageFormat, string category, DiagnosticSeverity severity)
+        internal static DiagnosticDescriptor GetDiagnosticDescriptor(string id, string title, string messageFormat, string category, DiagnosticSeverity severity)
         {
-            var descriptor = new DiagnosticDescriptor(
+            return new DiagnosticDescriptor(
                              id: id,
                              title: title,
                              messageFormat: messageFormat,
                              category: category,
                              defaultSeverity: severity,
                              isEnabledByDefault: true);
+
+            
+        }
+
+        internal static void Add(this DiagnosticDescriptor descriptor, Location? location, params string[] messageArgs)
+        {
+            Diagnostics.Add(Diagnostic.Create(descriptor, location, messageArgs));
         }
     }
 }

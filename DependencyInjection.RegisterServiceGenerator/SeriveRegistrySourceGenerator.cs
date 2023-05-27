@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Text;
+﻿using System.Text;
 using Microsoft.CodeAnalysis;
 
 namespace DependencyInjection.Toolkit
