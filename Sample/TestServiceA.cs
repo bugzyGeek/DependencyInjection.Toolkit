@@ -3,7 +3,7 @@ using DependencyInjectionToolkit.DependencyInjection.Factory;
 
 namespace Sample;
 
-[AddService(0,"ITestService")]
+[AddService(FactoryScope.Transient)]
 public class TestServiceA : ITestService
 {
     public void DoSomething()

@@ -34,9 +34,9 @@ namespace DependencyInjection.Toolkit
             foreach(var service in reciever.ServiceInfoList.AddServiceInfos)
             {
                 if (!string.IsNullOrEmpty(service.Interface))
-                    source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.ServiceDescriptors.AddFactory<global::{service.Interface}, global{service.Class}>({service.Scope};");
+                    source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.ServiceDescriptors.AddFactory<global::{service.Interface}, global::{service.Class}>(global::DependencyInjectionToolkit.DependencyInjection.Factory.{service.Scope});");
                 else
-                    source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.ServiceDescriptors.AddFactory<global{service.Class}>({service.Scope};");
+                    source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.ServiceDescriptors.AddFactory<global::{service.Class}>(global::DependencyInjectionToolkit.DependencyInjection.Factory.{service.Scope});");
             }
 
             source.AppendLine("\t\t}");

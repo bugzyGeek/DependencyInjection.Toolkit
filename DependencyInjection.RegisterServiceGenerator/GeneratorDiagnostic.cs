@@ -21,7 +21,7 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
             
         }
 
-        internal static void Add(this DiagnosticDescriptor descriptor, Location? location, params string[] messageArgs)
+        internal static void Add(this DiagnosticDescriptor descriptor, Location location, params string[] messageArgs)
         {
             Diagnostics.Add(Diagnostic.Create(descriptor, location, messageArgs));
         }

@@ -13,13 +13,7 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
 
         public void Add(string className, string interfaceName, int scope, SyntaxNode node)
         {
-            string factoryScope = scope switch
-            {
-                1 => "FactoryScope.Transient",
-                2 => "FactoryScope.Scope",
-                3 => "FactoryScope.Singleton",
-                _ => ""
-            };
+            string factoryScope = ScopeConverter.ConvertToString(scope);;
 
             if (string.IsNullOrEmpty(factoryScope))
             {
@@ -36,7 +30,6 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
             }
 
             AddServiceInfos.Add(new AddServiceInfo(className, interfaceName, factoryScope));
-
         }
     }
 }
