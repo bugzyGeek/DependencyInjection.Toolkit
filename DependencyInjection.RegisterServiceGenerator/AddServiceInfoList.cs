@@ -18,8 +18,15 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
                 1 => "FactoryScope.Transient",
                 2 => "FactoryScope.Scope",
                 3 => "FactoryScope.Singleton",
-                _ => throw new ArgumentException($"Invalid scope value: {scope}")
+                _ => ""
             };
+
+            if (string.IsNullOrEmpty(factoryScope))
+            {
+                GeneratorDiagnostic.GetDiagnosticDescriptor("SG0002", "Invalid FactoryScope", $"The scope {0} is invalid", "DI Service Registration", DiagnosticSeverity.Error)
+                .Add(node.GetLocation(), scope.ToString(), className);
+                return;
+            }
 
             bool serviceMapped = AddServiceInfos.Any(r => r.Class.Equals(className) && r.Interface.Equals(interfaceName) && r.Scope.Equals(factoryScope));
             if (serviceMapped)

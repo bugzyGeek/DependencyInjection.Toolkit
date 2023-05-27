@@ -11,7 +11,7 @@ namespace DependencyInjection.Toolkit
     public class MainSyntaxReceiver : ISyntaxReceiver
     {
         public AddServiceInfoList ServiceInfoList { get; } = new AddServiceInfoList();
-        public static List<Diagnostic> Diagnostics {  get; } = new List<Diagnostic>();
+        public static List<Diagnostic> Diagnostics { get; } = new List<Diagnostic>();
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
@@ -57,43 +57,47 @@ namespace DependencyInjection.Toolkit
 
         private void ProcessDetailsToGenerate(Type[] interfaces, string[] registerationInterfaces, int scope, string className, SyntaxNode node)
         {
-            bool implementsInterfaces = (interfaces != null &&  interfaces.Length > 0);
+            bool implementsInterfaces = (interfaces != null && interfaces.Length > 0);
             bool specifiedInterfaces = (registerationInterfaces != null && registerationInterfaces.Length > 0);
 
             if (!implementsInterfaces && !specifiedInterfaces)
-                ServiceInfoList.Add(className, string.Empty, scope,node);
-            else if(!specifiedInterfaces && implementsInterfaces)
+                ServiceInfoList.Add(className, string.Empty, scope, node);
+            else if (!specifiedInterfaces && implementsInterfaces)
             {
                 foreach (Type interfaceType in interfaces)
                 {
                     ServiceInfoList.Add(className, interfaceType.FullName, scope, node);
                 }
             }
-            else if(specifiedInterfaces && implementsInterfaces)
+            else if (specifiedInterfaces && implementsInterfaces)
             {
                 var interfaceSet = new HashSet<string>(registerationInterfaces);
                 List<string> matchedInterfaces = interfaces.Where(r => interfaceSet.Contains(r.Name) || interfaceSet.Contains(r.FullName)).Select(r => r.FullName).ToList();
 
                 if (matchedInterfaces.Count != registerationInterfaces.Length)
                 {
-                    List<string> invalidInterface = interfaceSet.Except(matchedInterfaces).ToList();
+                    ;
                     StringBuilder stringBuilder = new StringBuilder();
-                    foreach(var i in invalidInterface)
+                    foreach (var i in interfaces)
                     {
-                        stringBuilder.Append($",{i} ");
-                        stringBuilder.Remove(0, 1);
+                        if (!registerationInterfaces.Contains(i.Name) || !interfaceSet.Contains(i.FullName))
+                        {
+                            stringBuilder.Append($",{i} ");
+                            stringBuilder.Remove(0, 1);
+                        }
                     }
 
                     GeneratorDiagnostic.GetDiagnosticDescriptor("SG0001", $"Invalid Interface(s) registored for {className}", $"The interface(s) {0} are not implemented by the class {1}", "DI Service Registration", DiagnosticSeverity.Error)
                         .Add(node.GetLocation(), stringBuilder.ToString().Trim(), className);
+                    return;
                 }
 
                 foreach (string interfaceType in matchedInterfaces)
                 {
-                    ServiceInfoList.Add(className, interfaceType, scope,node);
+                    ServiceInfoList.Add(className, interfaceType, scope, node);
                 }
             }
-            
+
         }
     }
 }

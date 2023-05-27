@@ -8,7 +8,7 @@ namespace DependencyInjection.Toolkit
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            ISyntaxReceiver reciever = (MainSyntaxReceiver) context.SyntaxReceiver;
+            var reciever = (MainSyntaxReceiver) context.SyntaxReceiver;
 
             var filename = "ServiceRegistry.g.cs";
 
@@ -31,7 +31,13 @@ namespace DependencyInjection.Toolkit
             source.AppendLine("\t\tpublic static void RegistorServices(this IServiceCollection service)");
             source.AppendLine("\t\t{");
 
-            // code will be generated here
+            foreach(var service in reciever.ServiceInfoList.AddServiceInfos)
+            {
+                if (!string.IsNullOrEmpty(service.Interface))
+                    source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.ServiceDescriptors.AddFactory<global::{service.Interface}, global{service.Class}>({service.Scope};");
+                else
+                    source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.ServiceDescriptors.AddFactory<global{service.Class}>({service.Scope};");
+            }
 
             source.AppendLine("\t\t}");
 
