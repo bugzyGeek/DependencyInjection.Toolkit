@@ -3,7 +3,7 @@ using DependencyInjectionToolkit.DependencyInjection.Factory;
 
 namespace Sample;
 
-[AddService(0,"ITestService","iui")]
+[AddService(0,"ITestService")]
 public class TestServiceA : ITestService
 {
     public void DoSomething()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 
 namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator
@@ -7,17 +8,11 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
     {
         public static T GetParent<T>(this SyntaxNode node)
         {
-            var parent = node.Parent;
-            while (true)
-            {
-                if (parent == null)
-                    throw new NullReferenceException(nameof(parent));
-
-                if (parent is T t)
-                    return t;
-
-                parent = parent.Parent;
-            }
+            var parent = node.AncestorsAndSelf().OfType<T>().FirstOrDefault();
+            // Throw an exception if parent is null
+            if (parent == null)
+                throw new NullReferenceException(nameof(parent));
+            return parent;
         }
     }
 }

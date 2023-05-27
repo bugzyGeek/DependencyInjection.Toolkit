@@ -11,4 +11,6 @@ services.InitializeFactory();
 
 Console.WriteLine((FactoryScope)5);
 
+Console.WriteLine(nameof(FactoryScope));
+
 
