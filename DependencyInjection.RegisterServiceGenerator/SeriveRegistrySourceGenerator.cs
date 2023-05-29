@@ -21,7 +21,7 @@ namespace DependencyInjection.Toolkit
             var source = new StringBuilder();
             source.AppendLine("using Microsoft.Extensions.DependencyInjection;");
             source.AppendLine("using DependencyInjectionToolkit.DependencyInjection.Factory;");
-            source.AppendLine("namespace GeneratorTest");
+            source.AppendLine("namespace DependencyInjectionToolkit.DependencyInjection.Factory");
             source.AppendLine("{\n");
             source.AppendLine("\t/// <summary>");
             source.AppendLine("\t/// Auto generatered class");

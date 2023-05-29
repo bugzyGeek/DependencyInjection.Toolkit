@@ -1,7 +1,6 @@
 using System;
 using DependencyInjectionToolkit.DependencyInjection.Factory;
 using Microsoft.Extensions.DependencyInjection;
-using GeneratorTest;
 using Xunit;
 
 namespace DependencyInjection.Factory.UnitTest
