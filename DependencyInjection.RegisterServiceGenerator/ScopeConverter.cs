@@ -8,8 +8,7 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
     {
         internal static int ConvertToInt(string scope)
         {
-            int result;
-            if (int.TryParse(scope, out result))
+            if (int.TryParse(scope, out int result))
                 return result;
 
             return scope switch

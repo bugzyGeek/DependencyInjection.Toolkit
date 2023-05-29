@@ -16,7 +16,7 @@ namespace DependencyInjection.Factory.UnitTest
         {
             // Initialize the service collection and the factory
             var services = new ServiceCollection();
-            services.InitializeFactory().RegistorServices();
+            services.Initialize();
             //services.AddFactory<ITestService, TestServiceA>(FactoryScope.Transient);
             //services.AddFactory<ITestService, TestServiceB>(FactoryScope.Transient);
             _serviceProvider = services.BuildServiceProvider();

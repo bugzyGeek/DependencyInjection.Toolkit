@@ -11,6 +11,8 @@ DependencyInjectionToolkit is a library that simplifies this process for you. Wi
 - Use a generic factory class to create instances of the service type with a specific implementation type
 - Use a static class to initialize the service collection with all the registered services
 
+DependencyInjectionToolkit also supports using the registered services without the factory pattern approach if you don't need to create instances with different implementations at runtime. You can simply resolve the service from the service provider using the interface type or inject it into your classes using constructor injection.
+
 DependencyInjectionToolkit makes dependency injection and factory pattern easy and convenient in .NET.
 
 ## Installation
@@ -99,7 +101,7 @@ using Microsoft.Extensions.DependencyInjection;
 using DependencyInjectionToolkit.DependencyInjection.Factory;
 
 var services = new ServiceCollection();
-services.Initialize(); // This will register all the services marked with AddService attribute
+services.Initialize(); // This is an extension method that will register all the services marked with AddService attribute
 ```
 
 The `Initialize` method will scan all the assemblies in your project and find all the classes marked with `AddService` attribute. It will then register them as services and factories in the service collection.
@@ -116,33 +118,29 @@ var service = factory.Create<Service>(); // This will create an instance of Serv
 
 The `Factory<T>` class is a generic factory that can create instances of any service type `T` with any implementation type `I`. You just need to specify the implementation type as a generic parameter when calling the `Create<I>` method.
 
-## Documentation
+Note that you can also use the registered services without the factory pattern approach if you don't need to create instances with different implementations at runtime. You can simply resolve the service from the service provider using the interface type. For example:
 
-For more details and examples, please refer to the [documentation](https://github.com/DependencyInjectionToolkit/DependencyInjectionToolkit/wiki).
+```csharp
+using DependencyInjectionToolkit.DependencyInjection.Factory;
 
-## Testing
-
-To run tests for DependencyInjectionToolkit, use the following command:
-
-```bash
-dotnet test
+var serviceProvider = services.BuildServiceProvider();
+var service = serviceProvider.GetRequiredService<IService>(); // This will resolve an instance of Service class that implements IService interface
 ```
 
-This will run all the unit tests in the test project using xUnit.
+Or you can inject an instance of Service class into your classes using constructor injection. For example:
 
-## Contributing
+```csharp
+public class Test
+{
+    private readonly IService _service;
 
-We welcome contributions from anyone who is interested in improving DependencyInjectionToolkit. To contribute, please follow these steps:
+    public Test(IService service)
+    {
+        _service = service; // This will inject an instance of Service class that implements IService interface
+    }
 
-1. Fork this repository and clone it to your local machine.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them with descriptive messages.
-4. Push your branch to your forked repository.
-5. Create a pull request from your branch to this repository's main branch.
-6. Wait for feedback or approval from the maintainers.
+    // ...
+}
+```
 
-Please make sure to follow the coding style and conventions of this project. Also, please write unit tests for any new features or bug fixes.
-
-## License
-
-This library is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+However, if you need to create instances with different implementations at runtime, you should use

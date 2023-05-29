@@ -17,7 +17,7 @@ public class TestServiceB : ITestService, ITestServiceB, ITestServiceC
 {
     public void DoSomething()
     {
-        Console.WriteLine("TestServiceA did something");
+        Console.WriteLine("TestServiceB did something");
     }
 }
 
@@ -26,7 +26,7 @@ public class TestServiceC : ITestServiceB
 {
     public void DoSomething()
     {
-        Console.WriteLine("TestServiceA did something");
+        Console.WriteLine("TestServiceC did something");
     }
 }
 
@@ -35,7 +35,7 @@ public class TestServiceD
 {
     public void DoSomething()
     {
-        Console.WriteLine("TestServiceA did something");
+        Console.WriteLine("TestServiceD did something");
     }
 }
 
@@ -44,6 +44,6 @@ public class TestServiceE : ITestServiceA
 {
     public void DoSomething()
     {
-        Console.WriteLine("TestServiceA did something");
+        Console.WriteLine("TestServiceE did something");
     }
 }
