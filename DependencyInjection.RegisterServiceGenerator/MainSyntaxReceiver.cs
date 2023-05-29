@@ -12,7 +12,6 @@ namespace DependencyInjection.Toolkit
     public class MainSyntaxReceiver : ISyntaxReceiver
     {
         public AddServiceInfoList ServiceInfoList { get; } = new AddServiceInfoList();
-        public List<AttributeSyntax> AttributeList { get; } = new();
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
@@ -20,16 +19,17 @@ namespace DependencyInjection.Toolkit
             if (attributeSyntax is null)
                 return;
 
-            AttributeList.Add(attributeSyntax);
-
             AttributeArgumentSyntax[] argumentSyntaxes = GetAttributeArguments(attributeSyntax);
             ClassDeclarationSyntax classDeclaration = syntaxNode.GetParent<ClassDeclarationSyntax>();
-            (int scope, string[] interfaces) arguments = GetArguments(argumentSyntaxes);
+            if (classDeclaration == null)
+                return;
 
-            if (arguments.scope < 1 || arguments.scope > 3)
+            (int scope, string[] interfaces) = GetArguments(argumentSyntaxes);
+
+            if (scope < 1 || scope > 3)
                 GeneratorDiagnostic.GetDiagnosticDescriptor("SG00001", "Invalid Scope", "Invalid scope for class {0}", "Service Registration", DiagnosticSeverity.Error).Add(classDeclaration.GetLocation(), classDeclaration.Identifier.Text);
 
-            ServiceInfoList.Add(classDeclaration, arguments.interfaces, arguments.scope);
+            ServiceInfoList.Add(classDeclaration, interfaces, scope);
         }
 
         private AttributeSyntax GetAttributeSyntax(SyntaxNode syntaxNode)

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.ObjectPool;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DependencyInjection.Toolkit
@@ -11,12 +10,12 @@ namespace DependencyInjection.Toolkit
     [Generator]
     public class SeriveRegistrySourceGenerator : ISourceGenerator
     {
-        private SyntaxtNodeProcessor Implementation { get; set; } = new SyntaxtNodeProcessor();
         public void Execute(GeneratorExecutionContext context)
         {
             var reciever = (MainSyntaxReceiver)context.SyntaxReceiver;
-            Implementation.Process(context, reciever);
-            
+            SyntaxtNodeProcessor implementation = new();
+            implementation.Process(context, reciever);
+
             var filename = "ServiceRegistry.g.cs";
 
             var source = new StringBuilder();
@@ -30,7 +29,6 @@ namespace DependencyInjection.Toolkit
             source.AppendLine("\tpublic static class SeriveRegistry");
             source.AppendLine("\t{");
 
-            // Method code
             source.AppendLine("\t\t/// <summary>");
             source.AppendLine("\t\t/// Registers all dependency services");
             source.AppendLine("\t\t/// </summary>");
@@ -39,7 +37,7 @@ namespace DependencyInjection.Toolkit
             source.AppendLine("\t\tpublic static void RegistorServices(this IServiceCollection service)");
             source.AppendLine("\t\t{");
 
-            foreach (var info in Implementation.GeneratingInfoLists.GeneratingInfos)
+            foreach (var info in implementation.GeneratingInfoLists.GeneratingInfos)
             {
                 if (!string.IsNullOrEmpty(info.Interface))
                     source.AppendLine($"\t\t\tservice.AddFactory<{info.Interface}, {info.Class}>(global::DependencyInjectionToolkit.DependencyInjection.Factory.{info.Scope});");
@@ -54,6 +52,8 @@ namespace DependencyInjection.Toolkit
 
             foreach (var diagnostic in GeneratorDiagnostic.Diagnostics)
                 context.ReportDiagnostic(diagnostic);
+
+            GeneratorDiagnostic.Diagnostics.Clear();
 
             context.AddSource(filename, source.ToString());
         }

@@ -16,7 +16,6 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
 
         public void Process(GeneratorExecutionContext context, MainSyntaxReceiver receiver)
         {
-            Func<INamedTypeSymbol, string, bool> func = (r, s) => r.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Equals(s) || r.Name.Equals(s);
             foreach (AddServiceInfo serviceInfo in receiver.ServiceInfoList.AddServiceInfos)
             {
                 var semanticModel = context.Compilation.GetSemanticModel(serviceInfo.Class.SyntaxTree);
@@ -44,7 +43,7 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
                 {
                     foreach (var i in serviceInfo.Interface)
                     {
-                        INamedTypeSymbol interfaceTypeSymbol = interfaces.FirstOrDefault(r => func(r, i));
+                        INamedTypeSymbol interfaceTypeSymbol = interfaces.FirstOrDefault(r => Func(r, i));
 
                         if (interfaceTypeSymbol == null)
                         {
@@ -61,5 +60,6 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
             }
         }
 
+        private bool Func(INamedTypeSymbol r, string s) => r.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Equals(s) || r.Name.Equals(s);
     }
 }
