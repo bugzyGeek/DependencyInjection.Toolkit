@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "Sample\Sample.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection.RegisterServiceGenerator", "DependencyInjection.RegisterServiceGenerator\DependencyInjection.RegisterServiceGenerator.csproj", "{4FB112BC-84BB-4DD6-A2FA-091D5CB5C16E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dependency.UnitTest", "Dependency.UnitTest\Dependency.UnitTest.csproj", "{3A64642D-2943-4C13-AD6F-5361144D4F19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dependency.UnitTest", "Dependency.UnitTest\Dependency.UnitTest.csproj", "{3A64642D-2943-4C13-AD6F-5361144D4F19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A27A9BE-211E-406C-883A-D6763F496AB8}"
+	ProjectSection(SolutionItems) = preProject
+		DependencyInjection.Toolkit.nuspec = DependencyInjection.Toolkit.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

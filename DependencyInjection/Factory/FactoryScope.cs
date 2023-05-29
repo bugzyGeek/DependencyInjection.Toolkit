@@ -6,3 +6,8 @@ public enum FactoryScope
     Scope,
     Singleton
 }
+
+public enum AttInterface
+{
+    None
+}

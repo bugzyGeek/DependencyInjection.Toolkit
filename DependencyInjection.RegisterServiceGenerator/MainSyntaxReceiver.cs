@@ -26,6 +26,11 @@ namespace DependencyInjection.Toolkit
 
             (int scope, string[] interfaces) = GetArguments(argumentSyntaxes);
 
+            var noInterface = interfaces.FirstOrDefault(r => r.Equals("AttInterface.None")) != null;
+
+            if (noInterface && interfaces.Length > 0)
+                GeneratorDiagnostic.GetDiagnosticDescriptor("SG00001", "Invalid Scope", "Invalid scope for class {0}", "Service Registration", DiagnosticSeverity.Error).Add(classDeclaration.GetLocation(), classDeclaration.Identifier.Text);
+
             if (scope < 1 || scope > 3)
                 GeneratorDiagnostic.GetDiagnosticDescriptor("SG00001", "Invalid Scope", "Invalid scope for class {0}", "Service Registration", DiagnosticSeverity.Error).Add(classDeclaration.GetLocation(), classDeclaration.Identifier.Text);
 

@@ -30,7 +30,7 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
                     continue;
                 }
                 string clazz = classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-                if (interfaces.Length == 0)
+                if (interfaces.Length == 0 || interfaces.FirstOrDefault(r => r.Equals("AttInterface.None")) != null)
                 {
                     GeneratingInfoLists.Add(clazz, string.Empty, serviceInfo.Scope, serviceInfo.Class);
                 }

@@ -11,7 +11,7 @@ public static class FactoryServices
     /// </summary>
     /// <param name="serviceDescriptors">An IServiceCollection</param>
     /// <returns>A reference of this instance after the operation is completed</returns>
-    public static IServiceCollection InitializeFactory(this IServiceCollection serviceDescriptors)
+    public static IServiceCollection InitializeFactory(IServiceCollection serviceDescriptors)
     {
         ServiceDescriptors ??= serviceDescriptors;
         return serviceDescriptors;
