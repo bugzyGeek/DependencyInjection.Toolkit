@@ -1,14 +1,35 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>DependencyInjectionToolkit.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <!-- Add the following properties to generate a package on build and include the source generator as a dependency -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageId>DependencyInjectionToolkit.$(MSBuildProjectName.Replace(" ", "_"))</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Nana Akwasi Aforo</Authors>
+    <Description>
+      This package provides a .NET library that simplifies the use of dependency injection and factory pattern in your code.
+      It offers helpers that allow you to register and create services with different implementations and scopes easily.
+    </Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/bugzyGeek/DependencyInjection.Toolkit</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Keep the following item as it is needed for a library project -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <!-- Add the following item group to include the source generator as a dependency -->
+  <ItemGroup>
+    <None Include="C:\Users\Nana Akwasi Aforo\source\repos\DependencyInjection.Toolkit\DependencyInjection.RegisterServiceGenerator\bin\Release\netstandard2.0\DependencyInjection.RegisterServiceGenerator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
 </Project>

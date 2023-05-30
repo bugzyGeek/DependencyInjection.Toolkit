@@ -4,8 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <RootNamespace>DependencyInjectionToolkit.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GeneratePathProperty>true</GeneratePathProperty>
+    <IsRoslynComponent>true</IsRoslynComponent>
     <LangVersion>10</LangVersion>
   </PropertyGroup>
   
