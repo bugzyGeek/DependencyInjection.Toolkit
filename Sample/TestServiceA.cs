@@ -1,5 +1,4 @@
-﻿using DependencyInjectionToolkit.DependencyInjection.Attribute;
-using DependencyInjectionToolkit.DependencyInjection.Factory;
+﻿using DependencyInjectionToolkit.DependencyInjection.Register.Service;
 
 namespace Sample;
 

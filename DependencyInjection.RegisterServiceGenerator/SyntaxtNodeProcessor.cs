@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
+﻿using System.Linq;
 using DependencyInjection.Toolkit;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator
 {

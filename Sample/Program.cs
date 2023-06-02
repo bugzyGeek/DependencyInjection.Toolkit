@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System;
+using DependencyInjectionToolkit.DependencyInjection;
 using DependencyInjectionToolkit.DependencyInjection.Factory;
 using Microsoft.Extensions.DependencyInjection;
 using Sample;
@@ -10,15 +11,14 @@ var services = new ServiceCollection();
 // Initialize the factory services
 services.Initialize();
 
-Console.WriteLine((FactoryScope)5);
+Console.WriteLine("Start");
 
-Console.WriteLine(nameof(FactoryScope));
 
 var s = services.BuildServiceProvider();
 
 var f = s.GetRequiredService<IFactory<ITestService>>();
 
- var a = s.GetRequiredService< ITestServiceA > ();
+var a = s.GetRequiredService<ITestServiceA>();
 
 var b = s.GetRequiredService<IFactory<ITestServiceB>>();
 

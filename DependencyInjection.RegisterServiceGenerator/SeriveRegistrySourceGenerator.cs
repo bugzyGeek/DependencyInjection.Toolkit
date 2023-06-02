@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DependencyInjection.Toolkit
 {
@@ -21,7 +18,7 @@ namespace DependencyInjection.Toolkit
             var source = new StringBuilder();
             source.AppendLine("using Microsoft.Extensions.DependencyInjection;");
             source.AppendLine("using DependencyInjectionToolkit.DependencyInjection.Factory;");
-            source.AppendLine("namespace DependencyInjectionToolkit.DependencyInjection.Factory");
+            source.AppendLine("namespace DependencyInjectionToolkit.DependencyInjection");
             source.AppendLine("{\n");
             source.AppendLine("\t/// <summary>");
             source.AppendLine("\t/// Auto generatered class");
@@ -37,13 +34,13 @@ namespace DependencyInjection.Toolkit
             source.AppendLine("\t\tpublic static void Initialize(this IServiceCollection service)");
             source.AppendLine("\t\t{");
 
+                //source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.InitializeFactory(service);");
             foreach (var info in implementation.GeneratingInfoLists.GeneratingInfos)
             {
-                source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.InitializeFactory(service);");
                 if (!string.IsNullOrEmpty(info.Interface))
-                    source.AppendLine($"\t\t\tservice.AddFactory<{info.Interface}, {info.Class}>(global::DependencyInjectionToolkit.DependencyInjection.Factory.{info.Scope});");
+                    source.AppendLine($"\t\t\tservice.AddFactory<{info.Interface}, {info.Class}>(global::DependencyInjectionToolkit.DependencyInjection.Register.Service.{info.Scope});");
                 else
-                    source.AppendLine($"\t\t\tservice.AddFactory<{info.Class}>(global::DependencyInjectionToolkit.DependencyInjection.Factory.{info.Scope});");
+                    source.AppendLine($"\t\t\tservice.AddFactory<{info.Class}>(global::DependencyInjectionToolkit.DependencyInjection.Register.Service.{info.Scope});");
             }
 
             source.AppendLine("\t\t}");

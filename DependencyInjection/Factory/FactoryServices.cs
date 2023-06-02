@@ -1,21 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DependencyInjectionToolkit.DependencyInjection.Register.Service;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DependencyInjectionToolkit.DependencyInjection.Factory;
 
 public static class FactoryServices
 {
-    public static IServiceCollection? ServiceDescriptors { get; private set; }
-
-    /// <summary>
-    /// Initialize a factory builder to a specific IServiceCollection
-    /// </summary>
-    /// <param name="serviceDescriptors">An IServiceCollection</param>
-    /// <returns>A reference of this instance after the operation is completed</returns>
-    public static IServiceCollection InitializeFactory(IServiceCollection serviceDescriptors)
-    {
-        ServiceDescriptors ??= serviceDescriptors;
-        return serviceDescriptors;
-    }
 
     /// <summary>
     /// Add a service of type specified in <typeparamref name="TInterface"/> with the Implementation type specified in <typeparamref name="TImplementation"/> to the specified <typeparamref name="IServiceCollection"/>
