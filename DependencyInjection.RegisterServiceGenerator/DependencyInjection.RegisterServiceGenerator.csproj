@@ -2,8 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <!--<TargetFramework>net6.0</TargetFramework>-->
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <RootNamespace>DependencyInjectionToolkit.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <GeneratePathProperty>true</GeneratePathProperty>
+    <IsRoslynComponent>true</IsRoslynComponent>
     <LangVersion>10</LangVersion>
   </PropertyGroup>
   
@@ -11,5 +14,4 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
   </ItemGroup>
-
 </Project>

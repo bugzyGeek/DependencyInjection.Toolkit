@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace DependencyInjectionToolkit.DependencyInjection.Factory;
+﻿namespace DependencyInjectionToolkit.DependencyInjection.Factory;
 
 /// <summary>
 /// Specifies a contract for a factory service descriptors

@@ -1,1 +1,3 @@
-﻿public record struct AddServiceInfo(string Class, string Interface, string Scope);
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+public record struct AddServiceInfo(ClassDeclarationSyntax Class, string[] Interface, string Scope);
