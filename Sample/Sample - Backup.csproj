@@ -11,10 +11,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
-
-  <!--<ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DependencyInjection.RegisterServiceGenerator\DependencyInjection.RegisterServiceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\DependencyInjection\DependencyInjection.csproj" />
-  </ItemGroup>-->    
+  </ItemGroup>    
 
 </Project>
