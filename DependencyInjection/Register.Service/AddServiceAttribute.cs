@@ -7,4 +7,9 @@ public class AddServiceAttribute : Attribute
     {
 
     }
+
+    public AddServiceAttribute(FactoryScope scope, Interface tInterface)
+    {
+            
+    }
 }

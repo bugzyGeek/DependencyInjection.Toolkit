@@ -9,25 +9,25 @@ using Sample;
 var services = new ServiceCollection();
 
 // Initialize the factory services
-services.Initialize();
+//services.Initialize();
 
-Console.WriteLine("Start");
+//Console.WriteLine("Start");
 
 
-var s = services.BuildServiceProvider();
+//var s = services.BuildServiceProvider();
 
-var f = s.GetRequiredService<IFactory<ITestService>>();
+//var f = s.GetRequiredService<IFactory<ITestService>>();
 
-var a = s.GetRequiredService<ITestServiceA>();
+//var a = s.GetRequiredService<ITestServiceA>();
 
-var b = s.GetRequiredService<IFactory<ITestServiceB>>();
+//var b = s.GetRequiredService<IFactory<ITestServiceB>>();
 
-var c = s.GetRequiredService<IFactory<ITestServiceC>>();
+//var c = s.GetRequiredService<IFactory<ITestServiceC>>();
 
-var d = s.GetRequiredService<TestServiceD>();
+//var d = s.GetRequiredService<TestServiceD>();
 
-f.Create<TestServiceA>().DoSomething();
-a.DoSomething();
-b.Create<TestServiceC>().DoSomething();
-c.Create<TestServiceB>().DoSomething();
-d.DoSomething();
+//f.Create<TestServiceA>().DoSomething();
+//a.DoSomething();
+//b.Create<TestServiceC>().DoSomething();
+//c.Create<TestServiceB>().DoSomething();
+//d.DoSomething();
