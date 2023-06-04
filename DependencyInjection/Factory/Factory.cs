@@ -1,4 +1,4 @@
-﻿namespace DependencyInjectionToolkit.DependencyInjection.Factory;
+﻿namespace DependencyInjectionToolkit.DependencyInjection;
 
 /// <summary>
 /// A factory used to create a service type registered to the specified <typeparamref name="IServiceCollection"/> the <typeparamref name="Factory"/> is initialized

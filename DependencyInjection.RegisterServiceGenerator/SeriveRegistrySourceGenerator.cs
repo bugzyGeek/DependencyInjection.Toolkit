@@ -17,7 +17,7 @@ namespace DependencyInjection.Toolkit
 
             var source = new StringBuilder();
             source.AppendLine("using Microsoft.Extensions.DependencyInjection;");
-            source.AppendLine("using DependencyInjectionToolkit.DependencyInjection.Factory;");
+            source.AppendLine("using DependencyInjectionToolkit.DependencyInjection;");
             source.AppendLine("namespace DependencyInjectionToolkit.DependencyInjection");
             source.AppendLine("{\n");
             source.AppendLine("\t/// <summary>");
