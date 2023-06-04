@@ -46,3 +46,21 @@ public class TestServiceE : ITestServiceA
         Console.WriteLine("TestServiceE did something");
     }
 }
+
+[AddService(FactoryScope.Singleton, Interface.None)]
+public class TestServiceF : ITestServiceA
+{
+    public void DoSomething()
+    {
+        Console.WriteLine("TestServiceE did something");
+    }
+}
+
+[AddService(FactoryScope.Singleton, 0)]
+public class TestServiceG : ITestServiceA
+{
+    public void DoSomething()
+    {
+        Console.WriteLine("TestServiceE did something");
+    }
+}

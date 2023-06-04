@@ -1,7 +1,7 @@
 ﻿using DependencyInjectionToolkit.DependencyInjection.Register.Service;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DependencyInjectionToolkit.DependencyInjection.Factory;
+namespace DependencyInjectionToolkit.DependencyInjection;
 
 public static class FactoryServices
 {

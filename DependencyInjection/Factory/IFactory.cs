@@ -1,4 +1,4 @@
-﻿namespace DependencyInjectionToolkit.DependencyInjection.Factory;
+﻿namespace DependencyInjectionToolkit.DependencyInjection;
 
 /// <summary>
 /// Specifies a contract for a factory service descriptors

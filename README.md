@@ -15,6 +15,7 @@ DependencyInjectionToolkit combines these two patterns and provides a simple and
 - AddService attribute: Allows you to annotate your classes with the desired scope and interface(s) to register them as services in the IServiceCollection. You can use the nameof operator to specify the interface name, or use Interface.None to register the class without an interface.
 - Factory interface: Allows you to create instances of your services using a generic factory that resolves the implementation type from the service type. You can use the Create<I>() method to specify the implementation type, or use Create<T>() to use the default implementation type registered for the service type.
 - ServiceRegistry class: A static class that scans your assembly for classes with the AddService attribute and registers them as services using the FactoryServices extension methods. You can use the Initialize() method to register all your services in one line of code.
+- AddFactory method: This is an extension method of `IServiceCollection` used to register classes with the desired scope and interface(s) as services in the IServiceCollection. This is the same as adding the `AddService` attribute on a class declaration. This is used when registering a class from an external library and you do not have access to the class declaration to add an attribute to it.
 
 ## Installation
 
@@ -105,9 +106,30 @@ var services = new ServiceCollection();
 services.Initialize(); // This is an extension method that will register all the services marked with AddService attribute
 ```
 
-The Initialize method will scan all the assemblies in your project and find all the classes marked with AddService attribute. It will then register them as services and factories in the service collection.
+The Initialize method initializes the dependency and also will scan all the assemblies in your project and find all the classes marked with AddService attribute. It will then register them as services and factories in the service collection.
 
-3. Use the Factory<T> class to create instances of the service type T with a specific implementation type. You can resolve the factory from the service provider and call its Create<I> method, where I is the implementation type. For example:
+3. Registering services using `AddFactory` method.
+
+ ```csharp
+// Create an IServiceCollection
+var services = new ServiceCollection();
+
+// Initialize the factory services
+services.Initialize();
+
+// Add a service of type SomeInterface with the implementation type SomeImplementation using a scoped lifetime
+services.AddFactory<SomeInterface, SomeImplementation>(FactoryScope.Scope);
+
+// Add another service of type SomeInterface with the implementation type AnotherImplementation using a scoped lifetime
+services.AddFactory<SomeInterface, AnotherImplementation>(FactoryScope.Scope);
+
+// Add a service of type AnotherClass using a transient lifetime
+services.AddFactory<AnotherClass>(FactoryScope.Transient);
+```
+
+`AddService` attribute and `AddFactory` method are compined to register all implementations and Interfaces needed in your application
+
+4. Use the Factory<T> class to create instances of the service type T with a specific implementation type. You can resolve the factory from the service provider and call its Create<I> method, where I is the implementation type. For example:
 
 ```csharp
 using DependencyInjectionToolkit.DependencyInjection.Factory;

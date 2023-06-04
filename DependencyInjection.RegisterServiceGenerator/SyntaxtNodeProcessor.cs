@@ -17,14 +17,18 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
                 var classSymbol = symbol as INamedTypeSymbol;
                 var interfaces = classSymbol.AllInterfaces;
 
-                if (interfaces.Length == 0 && serviceInfo.Interface != null && serviceInfo.Interface.Length > 0)
+                // check if Interface.None is passed to the attribute
+                var noInterface = serviceInfo.Interface.Any(r => r.Equals("Interface.None"));
+
+                if (interfaces.Length == 0 && serviceInfo.Interface != null && serviceInfo.Interface.Length > 0 && !noInterface)
                 {
                     GeneratorDiagnostic.GetDiagnosticDescriptor("SG0003", "Invalid Interface Mapping", "An interface(s) was passed to the attrubute AddService for class {0} is not extending any interface", "DI Service Registration", DiagnosticSeverity.Error)
                 .Add(serviceInfo.Class.GetLocation(), serviceInfo.Class.Identifier.Text);
                     continue;
                 }
+
                 string clazz = classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-                if (interfaces.Length == 0 || interfaces.FirstOrDefault(r => r.Equals("AttInterface.None")) != null)
+                if (interfaces.Length == 0 || noInterface)
                 {
                     GeneratingInfoLists.Add(clazz, string.Empty, serviceInfo.Scope, serviceInfo.Class);
                 }

@@ -2,13 +2,13 @@
 
 using System;
 using DependencyInjectionToolkit.DependencyInjection;
-using DependencyInjectionToolkit.DependencyInjection.Factory;
+using DependencyInjectionToolkit.DependencyInjection.Register.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Sample;
 
 var services = new ServiceCollection();
 
-// Initialize the factory services
+//Initialize the factory services
 services.Initialize();
 
 Console.WriteLine("Start");
