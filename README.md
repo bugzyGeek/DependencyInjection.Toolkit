@@ -10,6 +10,10 @@ Factory patterns are a design pattern that helps you create objects without expo
 
 DependencyInjectionToolkit combines these two patterns and provides a simple and elegant way to register and create your services using attributes and extension methods. It integrates with the built-in dependency injection framework of .NET 6.0, and supports three scopes: transient, scoped, and singleton.
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Bugzygeek/DependencyInjection.Toolkit)
+![Nuget](https://img.shields.io/nuget/v/DependencyInjectionToolkit)
+![License](https://img.shields.io/github/license/Bugzygeek/DependencyInjection.Toolkit)
+
 ## Features
 
 - AddService attribute: Allows you to annotate your classes with the desired scope and interface(s) to register them as services in the IServiceCollection. You can use the nameof operator to specify the interface name, or use Interface.None to register the class without an interface.
