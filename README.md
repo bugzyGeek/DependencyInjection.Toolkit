@@ -17,7 +17,7 @@ DependencyInjectionToolkit combines these two patterns and provides a simple and
 ## Features
 
 - AddService attribute: Allows you to annotate your classes with the desired scope and interface(s) to register them as services in the IServiceCollection. You can use the nameof operator to specify the interface name, or use Interface.None to register the class without an interface.
-- Factory interface: Allows you to create instances of your services using a generic factory that resolves the implementation type from the service type. You can use the Create<I>() method to specify the implementation type, or use Create<T>() to use the default implementation type registered for the service type.
+- Factory interface: Allows you to create instances of your services using a generic factory that resolves the implementation type from the service type. You can use the Create\<I>() method to specify the implementation type, or use Create\<T>() to use the default implementation type registered for the service type.
 - ServiceRegistry class: A static class that scans your assembly for classes with the AddService attribute and registers them as services using the FactoryServices extension methods. You can use the Initialize() method to register all your services in one line of code.
 - AddFactory method: This is an extension method of `IServiceCollection` used to register classes with the desired scope and interface(s) as services in the IServiceCollection. This is the same as adding the `AddService` attribute on a class declaration. This is used when registering a class from an external library and you do not have access to the class declaration to add an attribute to it.
 
