@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 using DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -20,18 +19,30 @@ namespace DependencyInjection.Toolkit
 
             // Get the arguments passed to the attribute
             AttributeArgumentSyntax[] argumentSyntaxes = GetAttributeArguments(attributeSyntax);
-            // Get the class the attribute is applied to
+
+            // Get the class or interface the attribute is applied to
             ClassDeclarationSyntax classDeclaration = syntaxNode.GetParent<ClassDeclarationSyntax>();
-            if (classDeclaration == null)
+            InterfaceDeclarationSyntax interfaceDeclaration = syntaxNode.GetParent<InterfaceDeclarationSyntax>();
+            if (classDeclaration is null && interfaceDeclaration is null)
                 return;
 
             // process the aguments passed to the attribute
             (int scope, string[] interfaces) = GetArguments(argumentSyntaxes);
 
+            /// checks if the scope passed to the attribute is valid or not
             if (scope < 1 || scope > 3)
                 GeneratorDiagnostic.GetDiagnosticDescriptor("SG00001", "Invalid Scope", "Invalid scope for class {0}", "Service Registration", DiagnosticSeverity.Error).Add(classDeclaration.GetLocation(), classDeclaration.Identifier.Text);
 
-            ServiceInfoList.Add(classDeclaration, interfaces, scope);
+            if (classDeclaration is not null)
+                ServiceInfoList.Add(classDeclaration, interfaces, scope);
+            else
+            {
+                /// warns the user to remove the interface parameters passed to the Attribute if the attribute is set on an interface
+                if(interfaces.Length > 0)
+                    GeneratorDiagnostic.GetDiagnosticDescriptor("SG00004", "Invalid Attribute", "Remove interface name from the attribute parameters", "Service Registration", DiagnosticSeverity.Info).Add(classDeclaration.GetLocation());
+
+                ServiceInfoList.Add(interfaceDeclaration, scope);
+            }
         }
 
         /// <summary>

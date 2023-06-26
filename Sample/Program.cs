@@ -1,8 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System;
 using DependencyInjectionToolkit.DependencyInjection;
-using DependencyInjectionToolkit.DependencyInjection.Register.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Sample;
 

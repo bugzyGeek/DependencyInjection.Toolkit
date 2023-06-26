@@ -1,18 +1,32 @@
 ﻿using System.Linq;
 using DependencyInjection.Toolkit;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator
 {
     internal class SyntaxtNodeProcessor
     {
         public AddGeneratingInfoList GeneratingInfoLists { get; } = new AddGeneratingInfoList();
+        MainSyntaxReceiver _receiver;
+        Compilation _compilation;
 
         public void Process(GeneratorExecutionContext context, MainSyntaxReceiver receiver)
         {
-            foreach (AddServiceInfo serviceInfo in receiver.ServiceInfoList.AddServiceInfos)
+            _receiver = receiver;
+            _compilation = context.Compilation;
+            ProcessInterfaceRegister();
+            ProcessClassRegistry();
+        }
+
+        /// <summary>
+        /// This method process all the classes that were maked by the AddService attribute
+        /// </summary>
+        private void ProcessClassRegistry()
+        {
+            foreach (AddClassServiceInfo serviceInfo in _receiver.ServiceInfoList.AddServiceInfos)
             {
-                var semanticModel = context.Compilation.GetSemanticModel(serviceInfo.Class.SyntaxTree);
+                var semanticModel = _compilation.GetSemanticModel(serviceInfo.Class.SyntaxTree);
                 var symbol = semanticModel.GetDeclaredSymbol(serviceInfo.Class);
                 var classSymbol = symbol as INamedTypeSymbol;
                 var interfaces = classSymbol.AllInterfaces;
@@ -54,6 +68,29 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
                             GeneratingInfoLists.Add(clazz, interfaceTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), serviceInfo.Scope, serviceInfo.Class);
                         }
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process all Interfaces that where marked with the AddService attribute.
+        /// </summary>
+        private void ProcessInterfaceRegister()
+        {
+            foreach (AddInterfaceServiceInfo serviceInfo in _receiver.ServiceInfoList.AddInterfaceServiceInfos)
+            {
+                var semanticModel = _compilation.GetSemanticModel(serviceInfo.Interface.SyntaxTree);
+                var symbol = semanticModel.GetDeclaredSymbol(serviceInfo.Interface);
+                var interfaceSymbol = symbol as INamedTypeSymbol;
+                var classes = _compilation.SyntaxTrees
+                    .SelectMany(x => x.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>())
+                    .Where(x => x.BaseList?.Types.Any(y => y.Type.ToString() == interfaceSymbol.Name) ?? false);
+
+                foreach(ClassDeclarationSyntax clazz in classes)
+                {
+                    var classSemanticModel = _compilation.GetSemanticModel(clazz.SyntaxTree);
+                    var classSymbol = classSemanticModel.GetDeclaredSymbol(clazz);
+                    GeneratingInfoLists.Add((classSymbol as INamedTypeSymbol).ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), interfaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), serviceInfo.Scope, clazz);
                 }
             }
         }

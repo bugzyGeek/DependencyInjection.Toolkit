@@ -2,7 +2,7 @@
 
 namespace Sample;
 
-[AddService(FactoryScope.Transient)]
+
 public class TestServiceA : ITestService, ITestServiceB, ITestServiceC
 {
     public void DoSomething()
@@ -11,7 +11,7 @@ public class TestServiceA : ITestService, ITestServiceB, ITestServiceC
     }
 }
 
-[AddService(FactoryScope.Transient, "ITestService", nameof(ITestServiceC))]
+
 public class TestServiceB : ITestService, ITestServiceB, ITestServiceC
 {
     public void DoSomething()
