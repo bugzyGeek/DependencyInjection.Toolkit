@@ -31,7 +31,7 @@ namespace DependencyInjection.Toolkit
             source.AppendLine("\t\t/// </summary>");
             source.AppendLine("\t\t/// <param name=\"service\">Specified <paramref name=\"IServiceCollection\"/> the types are to be registered to</param>");
             source.AppendLine("\t\t/// <exception cref=\"ArgumentNullException\"></exception>");
-            source.AppendLine("\t\tpublic static void Initialize(this IServiceCollection service)");
+            source.AppendLine("\t\tpublic static IServiceCollection Initialize(this IServiceCollection service)");
             source.AppendLine("\t\t{");
 
                 //source.AppendLine($"\t\t\tglobal::DependencyInjectionToolkit.DependencyInjection.Factory.FactoryServices.InitializeFactory(service);");
