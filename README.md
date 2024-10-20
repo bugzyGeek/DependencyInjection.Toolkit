@@ -21,6 +21,17 @@ DependencyInjectionToolkit combines these two patterns and provides a simple and
 - ServiceRegistry class: A static class that scans your assembly for classes with the AddService attribute and registers them as services using the FactoryServices extension methods. You can use the Initialize() method to register all your services in one line of code.
 - AddFactory method: This is an extension method of `IServiceCollection` used to register classes with the desired scope and interface(s) as services in the IServiceCollection. This is the same as adding the `AddService` attribute on a class declaration. This is used when registering a class from an external library and you do not have access to the class declaration to add an attribute to it.
 
+## Version Compatibility
+
+DependencyInjectionToolkit is compatible with the following .NET versions:
+
+- **.NET 6**: The minimum required version for using DependencyInjectionToolkit.
+- **.NET 7**: Fully compatible.
+- **.NET 8**: Fully compatible and backward compatible with .NET 6 and .NET 7.
+
+This ensures that you can use DependencyInjectionToolkit in modern .NET applications while planning for future updates.
+
+
 ## Installation
 
 To install DependencyInjectionToolkit, run the following command in your project directory:
@@ -31,11 +42,60 @@ dotnet add package DependencyInjectionToolkit
 
 Alternatively, you can use the NuGet Package Manager in Visual Studio to search and install DependencyInjectionToolkit.
 
+## Getting Started
+
+To get started with DependencyInjectionToolkit, follow these steps:
+
+1. **Install the Package**: Run the following command in your project directory:
+    
+```bash
+dotnet add package DependencyInjectionToolkit
+```
+
+2. **Annotate Your Classes**: Use the `AddService` attribute to mark your classes for registration.
+
+```csharp
+using DependencyInjectionToolkit.DependencyInjection.Register.Service;
+
+[AddService(FactoryScope.Singleton, nameof(IService))]
+public class Service : IService
+{
+    // ...
+}
+```
+
+3. **Initialize Services**: Use the `ServiceRegistry` class to scan and register services.
+    
+```csharp
+using DependencyInjectionToolkit.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
+
+var services = new ServiceCollection();
+services.Initialize();
+```
+
+4. **Resolve Services**: Use the service provider to resolve or inject services.
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+
+var serviceProvider = services.BuildServiceProvider();
+var service = serviceProvider.GetRequiredService<IService>();
+```
+
+## Supported Scopes
+
+DependencyInjectionToolkit supports three scopes:
+
+1. **Transient**: A new instance is created each time it is requested.
+2. **Scoped**: A single instance is created per scope. Typically, a scope corresponds to a single request in web applications.
+3. **Singleton**: A single instance is created and shared throughout the application's lifetime.
+
 ## Usage
 
 To use DependencyInjectionToolkit, follow these steps:
 
-1. Mark the classes that you want to register as services with the AddService attribute. You can specify the scope (Transient, Scope, or Singleton) and the interfaces that the class implements as parameters. For example:
+1. Mark the classes that you want to register as services with the AddService attribute. You can specify the lifetime (Transient, Scoped, or Singleton) and the interfaces that the class implements as parameters. For example:
 
 ```csharp
 using DependencyInjectionToolkit.DependencyInjection.Register.Service;
@@ -48,9 +108,9 @@ public class Service : IService
 }
 ```
 
-The AddService attribute will automatically register the class as a service with the specified scope and interfaces. It will also register a factory for creating instances of this class.
+The AddService attribute will automatically register the class as a service with the specified lifetime and interfaces. It will also register a factory for creating instances of this class.
 
-If your class does not implement any interface or you want to register it as itself, you need to omit the interface types in the attribute. Alternatively, you can use the Interface.None enum value in the attribute if you want to explicitly indicate that your class does not implement any interface. For example:
+If your class does not implement any interface and you want to register it as itself, you can omit the interface types in the attribute. However, if your class does implement interfaces but you do not want to register any of them, you should use the Interface.None enum value in the attribute to explicitly indicate that no interfaces should be registered. For example:
 
 ```csharp
 using DependencyInjectionToolkit.DependencyInjection.Register.Service;
@@ -107,10 +167,10 @@ using DependencyInjectionToolkit.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
-services.Initialize(); // This is an extension method that will register all the services marked with AddService attribute
+services.Initialize(); // This is an extension method that will register all the services marked with AddService attribute 
 ```
 
-The Initialize method initializes the dependency and also will scan all the assemblies in your project and find all the classes marked with AddService attribute. It will then register them as services and factories in the service collection.
+The Initialize method initializes the dependencies and will scan all the assemblies in your project to find all the classes marked with the AddService attribute. It will then register them as services and factories in the service collection.
 
 3. Registering services using `AddFactory` method.
 
@@ -131,7 +191,7 @@ services.AddFactory<SomeInterface, AnotherImplementation>(FactoryScope.Scope);
 services.AddFactory<AnotherClass>(FactoryScope.Transient);
 ```
 
-`AddService` attribute and `AddFactory` method are compined to register all implementations and Interfaces needed in your application
+`AddService` attribute and `AddFactory` method are combined to register all implementations and interfaces needed in your application
 
 4. Use the Factory<T> class to create instances of the service type T with a specific implementation type. You can resolve the factory from the service provider and call its Create<I> method, where I is the implementation type. For example:
 
@@ -153,6 +213,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var serviceProvider = services.BuildServiceProvider();
 var service = serviceProvider.GetRequiredService<IService>(); // This will resolve an instance of Service class that implements IService interface
+    
 ```
 
 Or you can inject an instance of Service class into your classes using constructor injection. For example:
@@ -161,15 +222,25 @@ Or you can inject an instance of Service class into your classes using construct
 public class Test
 {
     private readonly IService _service;
-    
+        
     public Test(IService service)
     {
         _service = service; // This will inject an instance of Service class that implements IService interface
     }
-    
+        
     // ...
 }
 ```
+
+## Real-World Use Cases
+
+Here are some real-world use cases for DependencyInjectionToolkit:
+
+1. **Web Applications**: Simplify the registration and resolution of services in ASP.NET Core applications.
+2. **Microservices**: Manage dependencies in microservices architectures, ensuring each service has its own scope.
+3. **Desktop Applications**: Use dependency injection in WPF or WinForms applications to manage services and their lifetimes.
+4. **Testing**: Easily mock dependencies for unit testing by swapping out implementations.
+
 
 ## Where to find more information?
 

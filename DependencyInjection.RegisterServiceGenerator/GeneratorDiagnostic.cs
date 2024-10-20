@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
 namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerator
 {
     internal static class GeneratorDiagnostic
     {
-        internal static List<Diagnostic> Diagnostics { get; } = new List<Diagnostic>();
-
+        internal static ImmutableList<Diagnostic> Diagnostics { get; private set; } = ImmutableList<Diagnostic>.Empty;
 
         internal static DiagnosticDescriptor GetDiagnosticDescriptor(string id, string title, string messageFormat, string category, DiagnosticSeverity severity)
         {
@@ -17,13 +17,11 @@ namespace DependencyInjectionToolkit.DependencyInjection.RegisterServiceGenerato
                              category: category,
                              defaultSeverity: severity,
                              isEnabledByDefault: true);
-
-            
         }
 
         internal static void Add(this DiagnosticDescriptor descriptor, Location location, params string[] messageArgs)
         {
-            Diagnostics.Add(Diagnostic.Create(descriptor, location, messageArgs));
+            Diagnostics = Diagnostics.Add(Diagnostic.Create(descriptor, location, messageArgs));
         }
     }
 }

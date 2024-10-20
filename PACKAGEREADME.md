@@ -11,6 +11,16 @@ using DependencyInjectionToolkit.DependencyInjection;
 // register Dependency Injection Toolkit on IServiceCollection
 service.Initialize();
 ```
+## Version Compatibility
+
+DependencyInjectionToolkit is compatible with the following .NET versions:
+
+- **.NET 6**: The minimum required version for using DependencyInjectionToolkit.
+- **.NET 7**: Fully compatible.
+- **.NET 8**: Fully compatible and backward compatible with .NET 6 and .NET 7.
+
+This ensures that you can use DependencyInjectionToolkit in modern .NET applications while planning for future updates.
+
 
 ## Further information
 
