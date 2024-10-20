@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DependencyInjection\DependencyInjection.csproj" />
+	  <ProjectReference Include="..\DependencyInjection.RegisterServiceGenerator\DependencyInjection.RegisterServiceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	  <ProjectReference Include="..\DependencyInjection\DependencyInjection.csproj" />
   </ItemGroup>
 
 </Project>

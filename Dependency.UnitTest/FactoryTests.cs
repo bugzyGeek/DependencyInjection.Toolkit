@@ -1,4 +1,5 @@
 using System;
+using DependencyInjectionToolkit.DependencyInjection;
 using DependencyInjectionToolkit.DependencyInjection.Factory;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;

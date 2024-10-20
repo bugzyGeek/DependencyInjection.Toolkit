@@ -1,6 +1,6 @@
 ﻿using DependencyInjectionToolkit.DependencyInjection;
 
-namespace Sample;
+namespace ConsoleTest;
 public interface ITestService
 {
     void DoSomething();
