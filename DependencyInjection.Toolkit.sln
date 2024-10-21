@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection.Registe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6A27A9BE-211E-406C-883A-D6763F496AB8}"
 	ProjectSection(SolutionItems) = preProject
-		DependencyInjection.Toolkit.nuspec = DependencyInjection.Toolkit.nuspec
+		DependencyInjectionToolkit.nuspec = DependencyInjectionToolkit.nuspec
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection", "DependencyInjection\DependencyInjection.csproj", "{DC1F1D2D-BC55-4F07-A17F-E7048172758A}"
